@@ -21,7 +21,7 @@
   (sql/with-connection db-spec
      (sql/create-table
         :posts
-        [:id "varchar(20) PRIMARY KEY"]
+        [:id "INTEGER PRIMARY KEY AUTO_INCREMENT"]
         [:title "varchar(100)"]
         [:content :text]
         [:timestamp :time]

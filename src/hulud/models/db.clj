@@ -23,4 +23,4 @@
 
 (defn get-posts
   []
-  (select posts)
+  (select posts))

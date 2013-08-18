@@ -9,14 +9,15 @@
   <li>
     <h3>{{item.title}}</h3>
     <p>{{item.content}}</p>
+    <p>{{item}}</p>
     <time>{{item.timestamp|date:"yyyy-MM-dd HH:mm"}}</time>
   </li>
  {% endfor %}
  </ul>
 
  <form action="/" method="POST">
- <p> Title: <input type="text" name="name" value={{title}}> </p>
- <p> Content: <textarea rows="4" cols="50" name="message"> {{content}} </textarea> </p>
+ <p> Title: <input type="text" name="title" value={{title}}> </p>
+ <p> Content: <textarea rows="4" cols="50" name="content"> {{content}} </textarea> </p>
  <input type="submit" value="comment">
  </form>
 {% endblock %}

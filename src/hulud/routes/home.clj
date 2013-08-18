@@ -2,7 +2,7 @@
   (:use compojure.core)
   (:require [hulud.views.layout :as layout]
             [hulud.util :as util]
-            [hulud.models.db :db]))
+            [hulud.models.db :as db]))
 
 (defn home-page
   [& [title content error]]
@@ -21,7 +21,7 @@
     (home-page title content "No content given")
     :else
     (do
-      (db/save-message title content)
+      (db/save-post title content)
       (home-page))))
 
 (defn about-page []
@@ -29,5 +29,5 @@
 
 (defroutes home-routes
   (GET "/" [] (home-page))
-  (POST "/" [title content] (save-message title content))
+  (POST "/" [title content] (save-post title content))
   (GET "/about" [] (about-page)))
