@@ -16,21 +16,20 @@
   []
   (.exists (new java.io.File (str (io/resource-path) db-store ".h2.db"))))
 
-(defn create-users-table
+(defn create-posts-table
   []
   (sql/with-connection db-spec
-    (sql/create-table
-      :users
-      [:id "varchar(20) PRIMARY KEY"]
-      [:first_name "varchar(30)"]
-      [:last_name "varchar(30)"]
-      [:email "varchar(30)"]
-      [:admin :boolean]
-      [:last_login :time]
-      [:is_active :boolean]
-      [:pass "varchar(100)"])))
+     (sql/create-table
+        :posts
+        [:id "varchar(20) PRIMARY KEY"]
+        [:title "varchar(100)"]
+        [:content :text]
+        [:created-at :time]
+        [:public :boolean])
+     (sql/do-commands
+       "CREATE INDEX created-at_index ON posts (created-at)")))))
 
 (defn create-tables
   "creates the database tables used by the application"
   []
-  (create-users-table))
+  (create-posts-table))
