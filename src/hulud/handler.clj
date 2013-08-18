@@ -4,6 +4,7 @@
             [noir.util.middleware :as middleware]
             [compojure.route :as route]
             [taoensso.timbre :as timbre]
+            [hulud.models.schema :as schema]
             [com.postspectacular.rotor :as rotor]))
 
 (defroutes app-routes
@@ -23,6 +24,9 @@
      :async? false ; should be always false for rotor
      :max-message-per-msecs nil
      :fn rotor/append})
+
+  ;;initilze the database
+  (if-not (schema/initialized?) (schema/create-tables))
   
   (timbre/set-config!
     [:shared-appender-config :rotor]

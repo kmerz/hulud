@@ -24,10 +24,10 @@
         [:id "varchar(20) PRIMARY KEY"]
         [:title "varchar(100)"]
         [:content :text]
-        [:created-at :time]
+        [:timestamp :time]
         [:public :boolean])
      (sql/do-commands
-       "CREATE INDEX created-at_index ON posts (created-at)")))))
+       "CREATE INDEX timestamp_index ON posts (timestamp)")))
 
 (defn create-tables
   "creates the database tables used by the application"

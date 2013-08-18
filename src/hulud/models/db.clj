@@ -12,7 +12,7 @@
   (insert posts
           (values {:title title
                    :content content
-                   :created-at (new java.util.Date)})))
+                   :timestamp (new java.util.Date)})))
 
 ;(defn update-user [id first-name last-name email]
 ;  (update users
