@@ -5,12 +5,12 @@
             [hulud.models.db :db]))
 
 (defn home-page
-  [& [title content error]
+  [& [title content error]]
   (layout/render "home.html"
                  {:error error
                   :title title
                   :content content
-                  :posts (db/get-posts}))
+                  :posts (db/get-posts)}))
 
 (defn save-post
   [title content]
