@@ -14,13 +14,10 @@
                    :content content
                    :timestamp (new java.util.Date)})))
 
-;(defn update-user [id first-name last-name email]
-;  (update users
-;  (set-fields {:first_name first-name
-;               :last_name last-name
-;               :email email})
-;  (where {:id id})))
+(defn clob-to-string [clob]
+  (with-open [rdr (java.io.BufferedReader. (.getCharacterStream clob))]
+    (apply str (line-seq rdr))))
 
 (defn get-posts
   []
-  (select posts))
+  (select posts (order :timestamp :DESC)))

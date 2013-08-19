@@ -11,14 +11,21 @@
                   :title title
                   :content content
                   :posts (db/get-posts)}))
+(defn new-post
+  [& [title content error]]
+  (layout/render "new-post.html"
+                 {:error error
+                  :title title
+                  :content content}))
+   
 
 (defn save-post
   [title content]
   (cond
-    (empty? title)
-    (home-page title content "No title given")
     (empty? content)
-    (home-page title content "No content given")
+    (new-post title content "No content given")
+    (empty? title)
+    (new-post title content "No title given")
     :else
     (do
       (db/save-post title content)
@@ -29,5 +36,6 @@
 
 (defroutes home-routes
   (GET "/" [] (home-page))
-  (POST "/" [title content] (save-post title content))
+  (GET "/new-post" [] (new-post))
+  (POST "/new-post" [title content] (save-post title content))
   (GET "/about" [] (about-page)))
