@@ -1,0 +1,13 @@
+{% extends "hulud/views/templates/base.html" %}
+{% block content %}
+ {% if error %}
+ <p>{{error}}</p>
+ {% endif %}
+
+ <br />
+ <form action="/new-post" method="POST">
+   <p> Title: <input type="text" name="title" value={{title}}> </p>
+   <p> Content: <textarea rows="4" cols="50" name="content">{{content}}</textarea></p>
+   <input type="submit" value="comment">
+ </form>
+{% endblock %}
