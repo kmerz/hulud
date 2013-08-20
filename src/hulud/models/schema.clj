@@ -29,7 +29,20 @@
      (sql/do-commands
        "CREATE INDEX timestamp_index ON posts (timestamp)")))
 
+(defn create-users-table
+  []
+  (sql/with-connection db-spec
+     (sql/create-table
+        :users
+        [:id "INTEGER PRIMARY KEY AUTO_INCREMENT"]
+        [:name "varchar(30)"]
+        [:email "varchar(50)"]
+        [:password "varchar(100)"]
+        [:is_active :boolean]
+        [:last_login :time]))) 
+
 (defn create-tables
   "creates the database tables used by the application"
   []
-  (create-posts-table))
+  (create-posts-table)
+  (create-users-table))

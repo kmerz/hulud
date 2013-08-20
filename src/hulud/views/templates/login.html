@@ -1,0 +1,26 @@
+{% extends "hulud/views/templates/base.html" %}
+{% block content %}
+<form class="form-horizontal" action="/login" method="POST">
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Login</label>
+    <div class="controls">
+      <input type="text" id="inputEmail" placeholder="user name" name="user-name" value={{user-name}}>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputPassword">Password</label>
+    <div class="controls">
+      <input type="password" id="inputPassword" name="password" placeholder="Password">
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn">Sign in</button>
+    </div>
+  </div>
+</form>
+
+ {% if error %}
+ <p>{{error}}</p>
+ {% endif %}
+{% endblock %}
