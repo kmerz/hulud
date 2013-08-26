@@ -28,6 +28,15 @@
   []
   (map #(update-in % [:content] md-to-html-string) (get-posts)))
 
+(defn get-post-by-id
+  [id]
+  (select posts (where {:id id})))
+
+(defn get-post-for-html
+  [id]
+  (let [x (get-post-by-id id)]
+  (first (map #(update-in % [:content] md-to-html-string) x))))
+
 (defentity users)
 
 (defn get-user-by-name

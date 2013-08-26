@@ -1,8 +1,6 @@
 {% extends "hulud/views/templates/base.html" %}
 {% block content %}
- {% for item in posts %}
    <h3><a href="{{servlet-context}}/post/{{item.id}}">{{item.title}}</a></h3>
    {{item.content|safe}}
- {% endfor %}
 {% endblock %}
 

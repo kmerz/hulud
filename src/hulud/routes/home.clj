@@ -14,6 +14,12 @@
                   :content content
                   :posts (db/get-posts-for-html)}))
 
+(defn post-page
+  [& [id]]
+  (layout/render "post.html"
+                 {:user (session/get :user)
+                  :item (db/get-post-for-html id)}))
+
 (defn login-page
   [& [user-name error]]
   (layout/render "login.html"
@@ -64,6 +70,7 @@
 
 (defroutes home-routes
   (GET "/" [] (home-page))
+  (GET "/post/:id" [id] (post-page id))
   (GET "/new-post" [] (new-post))
   (POST "/new-post" [title content] (save-post title content))
   (GET "/about" [] (about-page))
