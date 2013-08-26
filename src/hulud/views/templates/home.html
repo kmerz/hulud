@@ -2,7 +2,7 @@
 {% block content %}
  {% for item in posts %}
    <h3>{{item.title}}</h3>
-   <p class="content">{{item.content}}</p>
+   <p class="content">{{item.content|safe}}</p>
  {% endfor %}
 {% endblock %}
 

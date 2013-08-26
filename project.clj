@@ -14,6 +14,7 @@
    [com.h2database/h2 "1.3.172"]
    [korma "0.3.0-RC5"]
    [crypto-password "0.1.0"]
+   [markdown-clj "0.9.30"]
    [log4j
     "1.2.17"
     :exclusions

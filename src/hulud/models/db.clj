@@ -1,6 +1,7 @@
 (ns hulud.models.db
   (:use korma.core
         [korma.db :only (defdb)])
+  (:use markdown.core)
   (:require [hulud.models.schema :as schema]
             [crypto.password.bcrypt :as pw]))
 
@@ -22,6 +23,10 @@
 (defn get-posts
   []
   (select posts (order :timestamp :DESC)))
+
+(defn get-posts-for-html
+  []
+  (map #(update-in % [:content] md-to-html-string) (get-posts)))
 
 (defentity users)
 

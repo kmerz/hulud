@@ -12,7 +12,7 @@
                   :title title
                   :user (session/get :user)
                   :content content
-                  :posts (db/get-posts)}))
+                  :posts (db/get-posts-for-html)}))
 
 (defn login-page
   [& [user-name error]]
