@@ -18,6 +18,7 @@
   [& [user-name error]]
   (layout/render "login.html"
                  {:error error
+                  :user (session/get :user)
                   :user-name user-name}))
 
 (defn login-user
@@ -42,6 +43,7 @@
   (layout/render "new-post.html"
                  {:error error
                   :title title
+                  :user (session/get :user)
                   :content content}))
 
 (defn save-post
@@ -57,7 +59,8 @@
       (home-page))))
 
 (defn about-page []
-  (layout/render "about.html"))
+  (layout/render "about.html"
+                 {:user (session/get :user)}))
 
 (defroutes home-routes
   (GET "/" [] (home-page))
