@@ -22,7 +22,7 @@
 
 (defn get-posts
   []
-  (select posts (order :timestamp :DESC)))
+  (select posts (order :id :DESC)))
 
 (defn get-posts-for-html
   []
