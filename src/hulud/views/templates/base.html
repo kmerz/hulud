@@ -13,17 +13,14 @@
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
                     <div class="container">
-                    <a class="brand" href="#">hulud</a>
+                    <a class="brand" href="{{servlet-context}}/">hulud</a>
                     <ul class="nav">
                         <li>
                             <a href="{{servlet-context}}/">Home</a>
                         </li>
-                        <li>
-                            <a href="{{servlet-context}}/about">About</a>
-                        </li>
                         {% if user %}
                         <li>
-                            <a href="{{servlet-context}}/new-post">New Post</a>
+                            <a href="{{servlet-context}}/post/new">New Post</a>
                         </li>
                         <li>
                             <a href="{{servlet-context}}/logout">Logout</a>
@@ -42,7 +39,7 @@
         </div>
         <div id="footer">
             <div class="container">
-                <a class="muted footer-text" href="{{servlet-context}}/impressum">Impressum</a>
+                <a class="muted footer-text" href="{{servlet-context}}/about">Impressum</a>
                 {% if not user %}
                 <a class="muted footer-text" href="{{servlet-context}}/login">Login</a>
                 {% endif %}

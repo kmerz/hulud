@@ -14,11 +14,32 @@
                   :content content
                   :posts (db/get-posts-for-html)}))
 
-(defn post-page
+(defn show-post
   [& [id]]
   (layout/render "post.html"
                  {:user (session/get :user)
                   :item (db/get-post-for-html id)}))
+
+(defn new-post
+  [& [title content error]]
+  (layout/render "new-post.html"
+                 {:error error
+                  :title title
+                  :url "/post/new"
+                  :user (session/get :user)
+                  :content content}))
+
+(defn save-post
+  [title content]
+  (cond
+    (empty? content)
+    (new-post title content "No content given")
+    (empty? title)
+    (new-post title content "No title given")
+    :else
+    (do
+      (db/save-post title content)
+      (home-page))))
 
 (defn login-page
   [& [user-name error]]
@@ -37,32 +58,11 @@
   (session/clear!)
   (home-page))
 
-(defn check-user
+(defn auth-user
   [name password]
   (if (db/correct-password-for-user? name password)
     (login-user (db/get-user-by-name name))
     (login-page name "Wrong password")))
-
-
-(defn new-post
-  [& [title content error]]
-  (layout/render "new-post.html"
-                 {:error error
-                  :title title
-                  :user (session/get :user)
-                  :content content}))
-
-(defn save-post
-  [title content]
-  (cond
-    (empty? content)
-    (new-post title content "No content given")
-    (empty? title)
-    (new-post title content "No title given")
-    :else
-    (do
-      (db/save-post title content)
-      (home-page))))
 
 (defn about-page []
   (layout/render "about.html"
@@ -70,10 +70,10 @@
 
 (defroutes home-routes
   (GET "/" [] (home-page))
-  (GET "/post/:id" [id] (post-page id))
-  (GET "/new-post" [] (new-post))
-  (POST "/new-post" [title content] (save-post title content))
+  (GET "/post/new" [] (new-post))
+  (POST "/post/new" [title content] (save-post title content))
+  (GET "/post/:id" [id] (show-post id))
   (GET "/about" [] (about-page))
   (GET "/login" [] (login-page))
-  (POST "/login" [user-name password] (check-user user-name password))
+  (POST "/login" [user-name password] (auth-user user-name password))
   (GET "/logout" [] logout-user))
