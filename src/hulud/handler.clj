@@ -1,6 +1,7 @@
 (ns hulud.handler  
   (:require [compojure.core :refer [defroutes]]            
             [hulud.routes.home :refer [home-routes]]
+            [hulud.routes.post :refer [post-routes]]
             [noir.util.middleware :as middleware]
             [compojure.route :as route]
             [taoensso.timbre :as timbre]
@@ -42,7 +43,7 @@
 
 (def app (middleware/app-handler
            ;;add your application routes here
-           [home-routes app-routes]
+           [home-routes post-routes app-routes]
            ;;add custom middleware here
            :middleware []
            ;;add access rules here
