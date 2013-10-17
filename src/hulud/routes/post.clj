@@ -7,7 +7,6 @@
 
 (defn show
   [& [id]]
-  (println id)
   (layout/render "post.html"
                  {:user (session/get :user)
                   :item (db/get-post-for-html id)}))
@@ -27,7 +26,7 @@
     (form post)))
 
 (defn save
-  [title content id]
+  [& [title content id]]
   (cond
     (empty? content)
     (form title content "No content given")
@@ -44,7 +43,7 @@
 
 (defroutes post-routes
   (GET "/post/new" [] (form))
-  (POST "/post/new" [title content] (save title content "/post/new"))
+  (POST "/post/new" [title content] (save title content))
   (GET "/post/:id" [id] (show id))
   (GET "/post/:id/edit" [id] (edit-form id))
-  (POST "/post/:id" [id] (save title content id)
+  (POST "/post/:id" [title content id] (save title content id)))
