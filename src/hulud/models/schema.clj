@@ -23,7 +23,7 @@
         :posts
         [:id "INTEGER PRIMARY KEY AUTO_INCREMENT"]
         [:title "varchar(100)"]
-        [:content "varchar(5000)"] ; This should be :text.
+        [:content "text"] ; This should be :text.
         [:timestamp :time]
         [:public :boolean])
      (sql/do-commands

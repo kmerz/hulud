@@ -58,7 +58,7 @@
                :email email
                :password (pw/encrypt password)}))))
 
-(defn correct-password-for-user? 
+(defn correct-password-for-user?
   [name password]
   (let [user (get-user-by-name name)]
     (if user
