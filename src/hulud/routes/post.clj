@@ -12,12 +12,12 @@
     :item (db/get-post-for-html id)}))
 
 (defn form
-  [& [{title :title content :content error :error}]]
+  [& [{title :title content :content error :error url :url}]]
   (if (session/get :user)
     (layout/render "new-post.html"
       {:error error
        :title title
-       :url "/post/new"
+       :url url
        :user (session/get :user)
        :content content})))
 
@@ -25,23 +25,23 @@
   [& [id]]
   (if (session/get :user)
     (let [post (db/get-post-by-id id)]
-      (form post))))
+      (form (assoc post :url (str "/post/" id))))))
 
 (defn delete
   [& [id]]
     (if (session/get :user)
       (db/delete-post id))
-    (form))
+    (form {:url "post/new"}))
 
 (defn save
-  [& [title content id]]
+  [& [title content id url]]
   (cond
     (not (session/get :user))
-    (form {:error "No user logged in"})
+    (form {:error "No user logged in" :url url})
     (empty? content)
-    (form {:title title :error "No content given"})
+    (form {:title title :error "No content given" :url url})
     (empty? title)
-    (form {:content content :error "No title given"})
+    (form {:content content :error "No title given" :url url})
     (empty? id)
     (do
       (let [id (last (last (db/save-post title content)))]
@@ -52,9 +52,9 @@
       (show id))))
 
 (defroutes post-routes
-  (GET "/post/new" [] (form))
-  (POST "/post/new" [title content] (save title content))
+  (GET "/post/new" [] (form {:url "post/new"}))
+  (POST "/post/new" [title content] (save title content "post/new"))
   (GET "/post/:id" [id] (show id))
   (GET "/post/:id/edit" [id] (edit-form id))
-  (POST "/post/:id" [title content id] (save title content id))
+  (POST "/post/:id" [title content id] (save title content id (str "post/" id)))
   (GET "/post/:id/delete" [id] (delete id)))

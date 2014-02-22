@@ -33,11 +33,12 @@
 
 (defn update-post
   [title content id]
-  ; should be update
-  (insert posts
-          (values {:title title
-                   :content content
-                   :timestamp (new java.util.Date)})))
+  (update posts
+    (set-fields
+      {:title title
+       :content content
+       :timestamp (new java.util.Date)})
+      (where {:id id})))
 
 (defn get-posts
   []
