@@ -32,10 +32,7 @@
     {:open-browser? false, :stacktraces? false, :auto-reload? false}},
    :dev
    {:dependencies [[ring-mock "0.1.5"] [ring/ring-devel "1.1.8"]]}}
-  :url
-  "http://example.com/FIXME"
-  :plugins
-  [[lein-ring "0.8.6"]]
-  :description
-  "FIXME: write description"
+  :url "http://hulud.net/FIXME"
+  :plugins [[lein-ring "0.8.6"]]
+  :description "my blog"
   :min-lein-version "2.0.0")

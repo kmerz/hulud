@@ -10,7 +10,15 @@
               :user "sa"
               :password ""
               :naming {:keys clojure.string/lower-case
-                       :fields clojure.string/upper-case}})
+                       :fields clojure.string/upper-case}
+              :make-pool? true
+              :excess-timeout 99
+              :idle-timeout 88
+              :minimum-pool-size 5
+              :maximum-pool-size 20
+              :test-connection-on-checkout true
+              :test-connection-query "SELECT 1"})
+
 (defn initialized?
   "checks to see if the database schema is present"
   []

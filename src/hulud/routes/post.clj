@@ -35,7 +35,7 @@
     (empty? id)
     (do
       (let [id (last (last (db/save-post title content)))]
-      (show id)))
+        (show id)))
     :else
     (do
       (db/update-post title content id)

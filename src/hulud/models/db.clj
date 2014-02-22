@@ -7,7 +7,17 @@
 
 (defdb db schema/db-spec)
 
-(defentity posts)
+(defn clob-to-string [clob]
+  "Turn a Derby 10.6.1.0 EmbedClob into a String"
+  (if (not (nil? clob))
+    (with-open [rdr (java.io.BufferedReader. (.getCharacterStream clob))]
+      (apply str (line-seq rdr)))))
+
+(defentity posts
+   (pk :id)
+   (entity-fields :id :timestamp :title :content :public)
+   (database db)
+   (transform #(assoc % :content (clob-to-string (:content %)))))
 
 (defn save-post
   [title content]
@@ -15,6 +25,7 @@
           (values {:title title
                    :content content
                    :timestamp (new java.util.Date)})))
+
 (defn update-post
   [title content id]
   ; should be update
@@ -22,10 +33,6 @@
           (values {:title title
                    :content content
                    :timestamp (new java.util.Date)})))
-
-(defn clob-to-string [clob]
-  (with-open [rdr (java.io.BufferedReader. (.getCharacterStream clob))]
-    (apply str (line-seq rdr))))
 
 (defn get-posts
   []
@@ -41,8 +48,7 @@
 
 (defn get-post-for-html
   [id]
-  (let [x (get-post-by-id id)]
-  (first (map #(update-in % [:content] md-to-html-string) x))))
+  (first (map #(update-in % [:content] md-to-html-string) (get-post-by-id id))))
 
 (defentity users)
 
