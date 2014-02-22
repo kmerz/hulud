@@ -9,7 +9,7 @@
   [& [id]]
   (layout/render "post.html"
     {:user (session/get :user)
-    :item (db/get-post-for-html id)}))
+     :item (db/get-post-for-html id)}))
 
 (defn form
   [& [{title :title content :content error :error url :url}]]
@@ -31,7 +31,7 @@
   [& [id]]
     (if (session/get :user)
       (db/delete-post id))
-    (form {:url "post/new"}))
+    (form {:url "/post/new"}))
 
 (defn save
   [& [title content id url]]
@@ -52,8 +52,8 @@
       (show id))))
 
 (defroutes post-routes
-  (GET "/post/new" [] (form {:url "post/new"}))
-  (POST "/post/new" [title content] (save title content "post/new"))
+  (GET "/post/new" [] (form {:url "/post/new"}))
+  (POST "/post/new" [title content] (save title content nil "/post/new"))
   (GET "/post/:id" [id] (show id))
   (GET "/post/:id/edit" [id] (edit-form id))
   (POST "/post/:id" [title content id] (save title content id (str "post/" id)))
