@@ -11,7 +11,7 @@
   "Turn a Derby 10.6.1.0 EmbedClob into a String"
   (if (not (nil? clob))
     (with-open [rdr (java.io.BufferedReader. (.getCharacterStream clob))]
-      (apply str (line-seq rdr)))))
+      (clojure.string/join "\n" (line-seq rdr)))))
 
 (defentity posts
    (pk :id)
@@ -25,6 +25,11 @@
           (values {:title title
                    :content content
                    :timestamp (new java.util.Date)})))
+
+(defn delete-post
+  [id]
+  (delete posts
+    (where {:id id})))
 
 (defn update-post
   [title content id]
@@ -44,11 +49,11 @@
 
 (defn get-post-by-id
   [id]
-  (select posts (where {:id id})))
+  (first (select posts (where {:id id}))))
 
 (defn get-post-for-html
   [id]
-  (first (map #(update-in % [:content] md-to-html-string) (get-post-by-id id))))
+  (update-in (get-post-by-id id) [:content] md-to-html-string))
 
 (defentity users)
 

@@ -1,6 +1,12 @@
 {% extends "hulud/views/templates/base.html" %}
 {% block content %}
    <h3><a href="{{servlet-context}}/post/{{item.id}}">{{item.title}}</a></h3>
-   {{item.content|safe}}
+   <div>
+     {{item.content|safe}}
+   </div>
+   {% if user %}
+   <a href="{{servlet-context}}/post/{{item.id}}/edit" class="btn">Edit</a>
+   <a href="{{servlet-context}}/post/{{item.id}}/delete" class="btn">Destroy</a>
+   {% endif %}
 {% endblock %}
 
