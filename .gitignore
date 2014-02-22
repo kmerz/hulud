@@ -3,6 +3,7 @@
 /classes
 /checkouts
 pom.xml
+resources/public/site.db.*.db
 *.jar
 *.class
 *.log
