@@ -26,3 +26,10 @@
     (if user
       (pw/check password (:password user))
       false)))
+
+(defn change-password
+  [id password]
+  (update users
+    (set-fields
+      {:password (pw/encrypt password)})
+      (where {:id id})))
