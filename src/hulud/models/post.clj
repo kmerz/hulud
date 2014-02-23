@@ -1,14 +1,12 @@
-(ns hulud.models.db
+(ns hulud.models.post
   (:use korma.core
         [korma.db :only (defdb)])
   (:use markdown.core)
-  (:require [hulud.models.schema :as schema]
-            [crypto.password.bcrypt :as pw]))
+  (:require [hulud.models.schema :as schema]))
 
 (defdb db schema/db-spec)
 
 (defn clob-to-string [clob]
-  "Turn a Derby 10.6.1.0 EmbedClob into a String"
   (if (not (nil? clob))
     (with-open [rdr (java.io.BufferedReader. (.getCharacterStream clob))]
       (clojure.string/join "\n" (line-seq rdr)))))
@@ -56,23 +54,3 @@
   [id]
   (update-in (get-post-by-id id) [:content] md-to-html-string))
 
-(defentity users)
-
-(defn get-user-by-name
-  [name]
-  (first (select users (where {:name name}))))
-
-(defn save-user
-  [name password email]
-  (if-not (= name (:name (get-user-by-name name)))
-    (insert users
-      (values {:name name
-               :email email
-               :password (pw/encrypt password)}))))
-
-(defn correct-password-for-user?
-  [name password]
-  (let [user (get-user-by-name name)]
-    (if user
-      (pw/check password (:password user))
-      false)))

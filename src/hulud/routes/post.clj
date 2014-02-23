@@ -3,7 +3,7 @@
   (:require [hulud.views.layout :as layout]
             [hulud.util :as util]
             [noir.session :as session]
-            [hulud.models.db :as db]))
+            [hulud.models.post :as db]))
 
 (defn show
   [& [id]]

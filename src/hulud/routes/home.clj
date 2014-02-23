@@ -3,7 +3,8 @@
   (:require [hulud.views.layout :as layout]
             [hulud.util :as util]
             [noir.session :as session]
-            [hulud.models.db :as db]))
+            [hulud.models.post :as post-db]
+            [hulud.models.user :as user-db]))
 
 (defn home-page
   [& [title content error]]
@@ -12,7 +13,7 @@
                   :title title
                   :user (session/get :user)
                   :content content
-                  :posts (db/get-posts-for-html)}))
+                  :posts (post-db/get-posts-for-html)}))
 
 (defn login-page
   [& [user-name error]]
@@ -33,8 +34,8 @@
 
 (defn auth-user
   [name password]
-  (if (db/correct-password-for-user? name password)
-    (login-user (db/get-user-by-name name))
+  (if (user-db/correct-password-for-user? name password)
+    (login-user (user-db/get-user-by-name name))
     (login-page name "Wrong password")))
 
 (defn about-page []
