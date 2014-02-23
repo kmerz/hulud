@@ -1,49 +1,53 @@
 <!DOCTYPE html PUBLIC "">
 <html>
-    <head>
-        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>hu&#955;ud - code, music, bike and photo</title>
-        <link href="{{servlet-context}}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="{{servlet-context}}/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
-        <link href="{{servlet-context}}/css/screen.css" rel="stylesheet" type="text/css">
-        <script type="text/javascript">	var context = "{{servlet-context}}";	</script><script src="//code.jquery.com/jquery-1.10.1.min.js" type="text/javascript"></script><script src="{{servlet-context}}/js/bootstrap.min.js" type="text/javascript"></script>
-    </head>
-    <body>
-        <div id="wrap">
-            <div class="navbar navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="container">
-                    <a class="brand" href="{{servlet-context}}/">hu&#955;ud</a>
-                    <ul class="nav">
-                        <li>
-                            <a href="{{servlet-context}}/">Home</a>
-                        </li>
-                        {% if user %}
-                        <li>
-                            <a href="{{servlet-context}}/post/new">New Post</a>
-                        </li>
-                        <li>
-                            <a href="{{servlet-context}}/logout">Logout</a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </div>
-                </div>
-            </div>
-            <div class="container">
-{% block content %}
-
-{% endblock %}
-            </div>
-            <div id="push"></div>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>hu&#955;ud - code, music, bike and photo</title>
+    <link href="{{servlet-context}}/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="{{servlet-context}}/css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+    <link href="{{servlet-context}}/css/screen.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">var context = "{{servlet-context}}";</script>
+    <script src="//code.jquery.com/jquery-1.10.1.min.js" type="text/javascript"></script>
+    <script src="{{servlet-context}}/js/bootstrap.min.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{servlet-context}}/">hu&#955;ud</a>
         </div>
-        <div id="footer">
-            <div class="container">
-                <a class="muted footer-text" href="{{servlet-context}}/about">Impressum</a>
-                {% if not user %}
-                <a class="muted footer-text" href="{{servlet-context}}/login">Login</a>
-                {% endif %}
-            </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="{{servlet-context}}/">Home</a>
+            </li>
+            {% if user %}
+            <li>
+              <a href="{{servlet-context}}/post/new">New Post</a>
+            </li>
+            <li>
+              <a href="{{servlet-context}}/logout">Logout</a>
+            </li>
+            {% endif %}
+            <li>
+              <a class="muted" href="{{servlet-context}}/about">Impressum</a>
+            </li>
+          </ul>
         </div>
-    </body>
+      </div>
+    </nav>
+    <div class="container">
+      <br>
+      <br>
+    {% block content %}
+    {% endblock %}
+  </div>
+  </body>
 </html>
