@@ -29,6 +29,10 @@
   (delete posts
     (where {:id id})))
 
+(defn count-posts
+  []
+  10)
+
 (defn update-post
   [title content id]
   (update posts
@@ -39,12 +43,12 @@
       (where {:id id})))
 
 (defn get-posts
-  []
+  [page]
   (select posts (order :id :DESC)))
 
 (defn get-posts-for-html
-  []
-  (map #(update-in % [:content] md-to-html-string) (get-posts)))
+  [page]
+  (map #(update-in % [:content] md-to-html-string) (get-posts page)))
 
 (defn get-post-by-id
   [id]

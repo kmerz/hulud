@@ -6,14 +6,16 @@
             [hulud.models.post :as post-db]
             [hulud.models.user :as user-db]))
 
+(defn clac-pagination [post-count]
+  (+ (/ (- post-count (mod post-count 4)) 4) 1))
+
 (defn home-page
-  [& [title content error]]
+  [& [{error :error page :page}]]
   (layout/render "home.html"
-                 {:error error
-                  :title title
+                 {:page page
+                  :page-count (clac-pagination (post-db/count-posts))
                   :user (session/get :user)
-                  :content content
-                  :posts (post-db/get-posts-for-html)}))
+                  :posts (post-db/get-posts-for-html page)}))
 
 (defn login-page
   [& [user-name error]]
@@ -25,12 +27,12 @@
 (defn login-user
   [user]
   (session/put! :user (:id user))
-  (home-page))
+  (home-page 1))
 
 (defn logout-user
   [& []]
   (session/clear!)
-  (home-page))
+  (home-page 1))
 
 (defn auth-user
   [name password]
@@ -43,7 +45,7 @@
                  {:user (session/get :user)}))
 
 (defroutes home-routes
-  (GET "/" [] (home-page))
+  (GET "/" [page] (home-page page))
   (GET "/about" [] (about-page))
   (GET "/login" [] (login-page))
   (POST "/login" [user-name password] (auth-user user-name password))
