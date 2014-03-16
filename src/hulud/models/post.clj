@@ -33,6 +33,11 @@
   []
   (:cnt (first (select posts (aggregate (count :*) :cnt)))))
 
+(defn calc-page-count
+  []
+  (int (Math/ceil (/ (count-posts) posts-per-page))))
+
+
 (defn update-post
   [title content id]
   (update posts
@@ -46,7 +51,7 @@
 
 (defn offset-from-page-num
   [page-num]
-  (+ (* (- page-num 1) posts-per-page) 1))
+  (* (- page-num 1) posts-per-page))
 
 (defn get-posts
   [page]

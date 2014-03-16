@@ -6,18 +6,14 @@
             [hulud.models.post :as post-db]
             [hulud.models.user :as user-db]))
 
-(defn calc-page-count [post-count]
-  (+ (/ (- post-count (mod post-count 4)) 4) 1))
-
 (defn home-page
   [& [{error :error page :page}]]
   (layout/render "home.html"
                  {:page page
                   :prev (- page 1)
                   :next (+ page 1)
-                  :pagelast (calc-page-count (post-db/count-posts))
-                  :page-range (range 1
-                    (+ (calc-page-count (post-db/count-posts)) 1))
+                  :pagelast (post-db/calc-page-count)
+                  :page-range (range 1 (+ (post-db/calc-page-count) 1))
                   :user (session/get :user)
                   :posts (post-db/get-posts-for-html page)}))
 
@@ -31,12 +27,12 @@
 (defn login-user
   [user]
   (session/put! :user (:id user))
-  (home-page :page 1))
+  (home-page {:page 1}))
 
 (defn logout-user
   [& []]
   (session/clear!)
-  (home-page :page 1))
+  (home-page {:page 1}))
 
 (defn auth-user
   [name password]
