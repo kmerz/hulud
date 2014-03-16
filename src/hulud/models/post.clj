@@ -29,6 +29,8 @@
   (delete posts
     (where {:id id})))
 
+(def posts-per-page 4)
+
 (defn count-posts
   []
   (:cnt (first (select posts (aggregate (count :*) :cnt)))))
@@ -46,8 +48,6 @@
        :content content
        :timestamp (new java.util.Date)})
       (where {:id id})))
-
-(def posts-per-page 4)
 
 (defn offset-from-page-num
   [page-num]
