@@ -31,7 +31,7 @@
 
 (defn count-posts
   []
-  10)
+  (:cnt (first (select posts (aggregate (count :*) :cnt)))))
 
 (defn update-post
   [title content id]
@@ -42,9 +42,16 @@
        :timestamp (new java.util.Date)})
       (where {:id id})))
 
+(def posts-per-page 4)
+
+(defn offset-from-page-num
+  [page-num]
+  (+ (* (- page-num 1) posts-per-page) 1))
+
 (defn get-posts
   [page]
-  (select posts (order :id :DESC)))
+  (select posts (order :id :DESC) (limit posts-per-page)
+          (offset (offset-from-page-num page))))
 
 (defn get-posts-for-html
   [page]

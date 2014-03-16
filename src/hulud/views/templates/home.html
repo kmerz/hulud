@@ -5,10 +5,23 @@
     {{item.content|safe}}
   {% endfor %}
   <ul class="pagination">
-    <li><a href="#">&laquo;</a></li>
-  {% for i in (range 1 page-count) %}
-    <li><a href="#">{{i}}</a></li>
+    {% ifequal page "1" %}
+      <li class="disabled"><a href="#">&laquo;</a></li>
+    {% else %}
+      <li><a href="/page/{{prev}}">&laquo;</a></li>
+    {% endifequal %}
+  {% for i in page-range %}
+    {% ifequal page i %}
+    <li class="active"><a href="#" >{{i}}<span class="sr-only">(current)</span>
+      </a></li>
+    {% else %}
+    <li><a href="/page/{{i}}">{{i}}</a></li>
+    {% endifequal %}
   {% endfor %}
-    <li><a href="#">&raquo;</a></li>
+    {% ifequal page pagelast %}
+      <li class="disabled"><a href="#">&raquo;</a></li>
+    {% else %}
+      <li><a href="/page/{{next}}">&raquo;</a></li>
+    {% endifequal %}
   </ul>
 {% endblock %}
